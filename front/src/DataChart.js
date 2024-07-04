@@ -1,13 +1,15 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const DataChart = ({ data }) => {
+const DataChart = ({ data, tValues, label }) => {
   const chartData = {
-    labels: data.map(point => point.x),
+    labels: tValues,
     datasets: [
       {
-        label: 'Control Optimal',
-        data: data.map(point => point.y),
+        label: label,
+        data: data,
         fill: false,
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
@@ -15,7 +17,24 @@ const DataChart = ({ data }) => {
     ],
   };
 
-  return <Line data={chartData} />;
+  const options = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'T' 
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: label 
+        }
+      }
+    }
+  };
+
+  return <Line data={chartData} options={options} />;
 };
 
 export default DataChart;
