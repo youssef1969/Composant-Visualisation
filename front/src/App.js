@@ -3,34 +3,37 @@ import DataTable from './DataTable';
 import DataChart from './DataChart';
 import './App.css';
 
-
 const App = () => {
-  const [x1Values, setX1Values] = useState([]);
-  const [x2Values, setX2Values] = useState([]);
-  const [yValues, setYValues] = useState([]);
+  const [xComponents, setXComponents] = useState([]);
+  const [yComponents, setYComponents] = useState([]);
   const [tValues, setTValues] = useState([]);
+
+  const handleDataSubmit = (xList, yList, tList) => {
+    setXComponents(xList);
+    setYComponents(yList);
+    setTValues(tList);
+  };
 
   return (
     <div>
       <h1>Visualisation de Contrôle Optimal</h1>
-      <DataTable setX1Values={setX1Values} setX2Values={setX2Values} setYValues={setYValues} setTValues={setTValues} />
+      <DataTable onDataSubmit={handleDataSubmit} />
       <div className="chart-container">
-        <div className="chart-wrapper">
-          <h2>X1 </h2>
-          <DataChart data={x1Values} tValues={tValues} label="X1" />
-        </div>
-        <div className="chart-wrapper">
-          <h2>X2 </h2>
-          <DataChart data={x2Values} tValues={tValues} label="X2" />
-        </div>
-        <div className="chart-wrapper">
-          <h2>Y </h2>
-          <DataChart data={yValues} tValues={tValues} label="Y" />
-        </div>
+        {xComponents.map((xComponent, index) => (
+          <div key={index} className="chart-wrapper">
+            <h2>X{index + 1} vs T</h2>
+            <DataChart data={xComponent} tValues={tValues} label={`X${index + 1}`} />
+          </div>
+        ))}
+        {yComponents.map((yComponent, index) => (
+          <div key={index} className="chart-wrapper">
+            <h2>Y{index + 1} vs T</h2>
+            <DataChart data={yComponent} tValues={tValues} label={`Y${index + 1}`} />
+          </div>
+        ))}
       </div>
     </div>
   );
-  
 };
 
 export default App;

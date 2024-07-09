@@ -1,42 +1,45 @@
 import React, { useState } from 'react';
 
-const DataTable = ({ setX1Values, setX2Values, setYValues, setTValues }) => {
+const DataTable = ({ onDataSubmit }) => {
   const [xInput, setXInput] = useState('');
   const [yInput, setYInput] = useState('');
   const [tInput, setTInput] = useState('');
 
   const handleSubmit = () => {
-   
-    const cleanXInput = xInput.replace(/\s/g, '');
-    const cleanYInput = yInput.replace(/\s/g, '');
-    const cleanTInput = tInput.replace(/\s/g, '');
+    const xList = parseInput(xInput);
+    const yList = parseInput(yInput);
+    const tList = parseSimpleInput(tInput);
 
-    const xList = cleanXInput.split('),(').map(pair => {
-      const cleanedPair = pair.replace(/[()]/g, '').split(',');
-      return [Number(cleanedPair[0]), Number(cleanedPair[1])];
-    });
-    const yList = cleanYInput.split(',').map(Number);
-    const tList = cleanTInput.split(',').map(Number);
-
-    
-    if (xList.length === yList.length && yList.length === tList.length) {
-      const x1List = xList.map(pair => pair[0]);
-      const x2List = xList.map(pair => pair[1]);
-
-      setX1Values(x1List);
-      setX2Values(x2List);
-      setYValues(yList);
-      setTValues(tList);
+    // Vérifiez que toutes les listes ont la même longueur
+    if (xList[0].length === yList[0].length && yList[0].length === tList.length) {
+      onDataSubmit(xList, yList, tList);
     } else {
       alert('Les listes x, y et t doivent avoir la même longueur.');
     }
+  };
+
+  // Fonction utilitaire pour parser les entrées X et Y
+  const parseInput = (input) => {
+    const pairs = input.split('),');
+    const parsed = pairs.map(pair => {
+      const trimmedPair = pair.trim().replace('(', '').replace(')', '');
+      return trimmedPair.split(',').map(Number);
+    });
+
+    // Transpose the matrix
+    return parsed[0].map((_, colIndex) => parsed.map(row => row[colIndex]));
+  };
+
+  // Fonction utilitaire pour parser les entrées simples (T)
+  const parseSimpleInput = (input) => {
+    return input.split(',').map(Number);
   };
 
   return (
     <div>
       <div>
         <label>
-          {'>'} X values  e.g. (1,2),(3,4):
+          X values :
           <input
             type="text"
             value={xInput}
@@ -46,7 +49,7 @@ const DataTable = ({ setX1Values, setX2Values, setYValues, setTValues }) => {
       </div>
       <div>
         <label>
-          {'>'} Y values :
+          Y values :
           <input
             type="text"
             value={yInput}
@@ -56,7 +59,7 @@ const DataTable = ({ setX1Values, setX2Values, setYValues, setTValues }) => {
       </div>
       <div>
         <label>
-          {'>'} T values :
+          T values :
           <input
             type="text"
             value={tInput}
@@ -64,7 +67,7 @@ const DataTable = ({ setX1Values, setX2Values, setYValues, setTValues }) => {
           />
         </label>
       </div>
-      <button onClick={handleSubmit}>Mettre à jour les données</button>
+      <button onClick={handleSubmit}>show</button>
     </div>
   );
 };

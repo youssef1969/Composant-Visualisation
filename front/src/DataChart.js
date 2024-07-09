@@ -1,6 +1,8 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import './App.css';
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const DataChart = ({ data, tValues, label }) => {
@@ -17,24 +19,7 @@ const DataChart = ({ data, tValues, label }) => {
     ],
   };
 
-  const options = {
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'T' 
-        }
-      },
-      y: {
-        title: {
-          display: true,
-          text: label 
-        }
-      }
-    }
-  };
-
-  return <Line data={chartData} options={options} />;
+  return <Line data={chartData} />;
 };
 
 export default DataChart;
