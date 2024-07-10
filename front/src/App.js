@@ -5,11 +5,13 @@ import './App.css';
 
 const App = () => {
   const [xComponents, setXComponents] = useState([]);
+  const [pComponents, setPComponents] = useState([]);
   const [yComponents, setYComponents] = useState([]);
   const [tValues, setTValues] = useState([]);
 
-  const handleDataSubmit = (xList, yList, tList) => {
+  const handleDataSubmit = (xList,pList, yList, tList) => {
     setXComponents(xList);
+    setPComponents(xList);
     setYComponents(yList);
     setTValues(tList);
   };
@@ -21,14 +23,20 @@ const App = () => {
       <div className="chart-container">
         {xComponents.map((xComponent, index) => (
           <div key={index} className="chart-wrapper">
-            <h2>X{index + 1} vs T</h2>
+            <h2>X{index + 1} </h2>
             <DataChart data={xComponent} tValues={tValues} label={`X${index + 1}`} />
           </div>
         ))}
+        {pComponents.map((pComponent, index) => (
+          <div key={index} className="chart-wrapper">
+            <h2>P{index + 1} </h2>
+            <DataChart data={pComponent} tValues={tValues} label={`P${index + 1}`} />
+          </div>
+        ))}       
         {yComponents.map((yComponent, index) => (
           <div key={index} className="chart-wrapper">
-            <h2>Y{index + 1} vs T</h2>
-            <DataChart data={yComponent} tValues={tValues} label={`Y${index + 1}`} />
+            <h2>U{index + 1} </h2>
+            <DataChart data={yComponent} tValues={tValues} label={`U${index + 1}`} />
           </div>
         ))}
       </div>

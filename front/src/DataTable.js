@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 
 const DataTable = ({ onDataSubmit }) => {
   const [xInput, setXInput] = useState('');
+  const [pInput, setPInput] = useState('');
   const [yInput, setYInput] = useState('');
   const [tInput, setTInput] = useState('');
 
   const handleSubmit = () => {
     const xList = parseInput(xInput);
+    const pList = parseInput(pInput);
     const yList = parseInput(yInput);
     const tList = parseSimpleInput(tInput);
 
     // Vérifiez que toutes les listes ont la même longueur
-    if (xList[0].length === yList[0].length && yList[0].length === tList.length) {
-      onDataSubmit(xList, yList, tList);
+    if (xList[0].length === yList[0].length && yList[0].length === tList.length && pList[0].length === yList[0].length) {
+      onDataSubmit(xList,pList,yList, tList);
     } else {
-      alert('Les listes x, y et t doivent avoir la même longueur.');
+      alert('Les listes x,p,y et t doivent avoir la même longueur.');
     }
   };
 
@@ -39,7 +41,7 @@ const DataTable = ({ onDataSubmit }) => {
     <div>
       <div>
         <label>
-          X values :
+          X  :
           <input
             type="text"
             value={xInput}
@@ -49,7 +51,17 @@ const DataTable = ({ onDataSubmit }) => {
       </div>
       <div>
         <label>
-          Y values :
+          P  :
+          <input
+            type="text"
+            value={pInput}
+            onChange={e => setPInput(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Y  :
           <input
             type="text"
             value={yInput}
@@ -59,7 +71,7 @@ const DataTable = ({ onDataSubmit }) => {
       </div>
       <div>
         <label>
-          T values :
+          T  :
           <input
             type="text"
             value={tInput}
