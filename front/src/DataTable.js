@@ -20,9 +20,9 @@ const DataTable = ({ onDataSubmit }) => {
 
   // Fonction utilitaire pour parser les entrées X et Y
   const parseInput = (input) => {
-    const pairs = input.split('),');
+    const pairs = input.split('],');
     const parsed = pairs.map(pair => {
-      const trimmedPair = pair.trim().replace('(', '').replace(')', '');
+      const trimmedPair = pair.trim().replace('[', '').replace(']', '');
       return trimmedPair.split(',').map(Number);
     });
 
