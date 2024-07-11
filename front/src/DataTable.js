@@ -3,18 +3,26 @@ import React, { useState } from 'react';
 const DataTable = ({ onDataSubmit }) => {
   const [xInput, setXInput] = useState('');
   const [pInput, setPInput] = useState('');
-  const [yInput, setYInput] = useState('');
+  const [uInput, setUInput] = useState('');
   const [tInput, setTInput] = useState('');
+  const [xLabelsInput, setXLabelsInput] = useState('');
+  const [pLabelsInput, setPLabelsInput] = useState('');
+  const [uLabelsInput, setULabelsInput] = useState('');
+  const [xDim, setXDim] = useState(0);
+  const [uDim, setUDim] = useState(0);
 
   const handleSubmit = () => {
     const xList = parseInput(xInput);
     const pList = parseInput(pInput);
-    const yList = parseInput(yInput);
+    const uList = parseInput(uInput);
     const tList = parseSimpleInput(tInput);
+    const xLabels = xLabelsInput.split(',').map(label => label.trim());
+    const pLabels = pLabelsInput.split(',').map(label => label.trim());
+    const uLabels = uLabelsInput.split(',').map(label => label.trim());
 
     // Vérifiez que toutes les listes ont la même longueur
-    if (xList[0].length === yList[0].length && yList[0].length === tList.length && pList[0].length === yList[0].length) {
-      onDataSubmit(xList,pList,yList, tList);
+    if (xList[0].length === uList[0].length && uList[0].length === tList.length && pList[0].length === uList[0].length) {
+      onDataSubmit(xList,pList,uList, tList, xLabels,pLabels, uLabels, xDim, uDim);
     } else {
       alert('Les listes x,p,y et t doivent avoir la même longueur.');
     }
@@ -64,8 +72,8 @@ const DataTable = ({ onDataSubmit }) => {
           Y  :
           <input
             type="text"
-            value={yInput}
-            onChange={e => setYInput(e.target.value)}
+            value={uInput}
+            onChange={e => setUInput(e.target.value)}
           />
         </label>
       </div>
@@ -76,6 +84,56 @@ const DataTable = ({ onDataSubmit }) => {
             type="text"
             value={tInput}
             onChange={e => setTInput(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          X_names :
+          <input
+            type="text"
+            value={xLabelsInput}
+            onChange={e => setXLabelsInput(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          P_names :
+          <input
+            type="text"
+            value={pLabelsInput}
+            onChange={e => setPLabelsInput(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          U_names :
+          <input
+            type="text"
+            value={uLabelsInput}
+            onChange={e => setULabelsInput(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          n(X):
+          <input
+            type="number"
+            value={xDim}
+            onChange={e => setXDim(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          m(U):
+          <input
+            type="number"
+            value={uDim}
+            onChange={e => setUDim(e.target.value)}
           />
         </label>
       </div>
