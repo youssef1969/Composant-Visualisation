@@ -8,6 +8,7 @@ const DataTable = ({ onDataSubmit }) => {
   const [xLabelsInput, setXLabelsInput] = useState('');
   const [pLabelsInput, setPLabelsInput] = useState('');
   const [uLabelsInput, setULabelsInput] = useState('');
+  const [axisLabelInput, setAxisLabelInput] = useState('');
   const [xDim, setXDim] = useState(0);
   const [uDim, setUDim] = useState(0);
 
@@ -19,12 +20,13 @@ const DataTable = ({ onDataSubmit }) => {
     const xLabels = xLabelsInput.split(',').map(label => label.trim());
     const pLabels = pLabelsInput.split(',').map(label => label.trim());
     const uLabels = uLabelsInput.split(',').map(label => label.trim());
+    const axisLabel = axisLabelInput.trim();
 
     // Vérifiez que toutes les listes ont la même longueur
     if (xList[0].length === uList[0].length && uList[0].length === tList.length && pList[0].length === uList[0].length) {
-      onDataSubmit(xList,pList,uList, tList, xLabels,pLabels, uLabels, xDim, uDim);
+      onDataSubmit(xList,pList,uList, tList, xLabels,pLabels, uLabels,axisLabel);
     } else {
-      alert('Les listes x,p,y et t doivent avoir la même longueur.');
+      alert('Les listes x,p,u et t doivent avoir la même longueur.');
     }
   };
 
@@ -47,6 +49,36 @@ const DataTable = ({ onDataSubmit }) => {
 
   return (
     <div>
+            <div>
+        <label>
+          n:
+          <input
+            type="number"
+            value={xDim}
+            onChange={e => setXDim(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          m:
+          <input
+            type="number"
+            value={uDim}
+            onChange={e => setUDim(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          T  :
+          <input
+            type="text"
+            value={tInput}
+            onChange={e => setTInput(e.target.value)}
+          />
+        </label>
+      </div>
       <div>
         <label>
           X  :
@@ -69,7 +101,7 @@ const DataTable = ({ onDataSubmit }) => {
       </div>
       <div>
         <label>
-          Y  :
+          U  :
           <input
             type="text"
             value={uInput}
@@ -79,11 +111,11 @@ const DataTable = ({ onDataSubmit }) => {
       </div>
       <div>
         <label>
-          T  :
+          T_names:
           <input
             type="text"
-            value={tInput}
-            onChange={e => setTInput(e.target.value)}
+            value={axisLabelInput}
+            onChange={e => setAxisLabelInput(e.target.value)}
           />
         </label>
       </div>
@@ -114,26 +146,6 @@ const DataTable = ({ onDataSubmit }) => {
             type="text"
             value={uLabelsInput}
             onChange={e => setULabelsInput(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          n(X):
-          <input
-            type="number"
-            value={xDim}
-            onChange={e => setXDim(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          m(U):
-          <input
-            type="number"
-            value={uDim}
-            onChange={e => setUDim(e.target.value)}
           />
         </label>
       </div>

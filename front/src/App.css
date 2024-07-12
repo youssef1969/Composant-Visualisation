@@ -1,31 +1,41 @@
-body {
-  font-family: Arial, sans-serif;
+.app-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
 }
 
-h1 {
-  text-align: center;
-}
-
-div {
-  margin: 20px;
-}
-
-input {
-  margin: 5px 0;
-}
-
-button {
-  margin: 10px 0;
+.input-section {
+  flex: 1;
+  max-width: 250px;
+  padding-right: 20px;
 }
 
 .chart-container {
   display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.chart-columns {
+  display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px; /* Add margin to separate columns */
+}
+
+.chart-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: -22px; /* margin to separate from columns */
 }
 
 .chart-wrapper {
-  width: 30%;
-  height: 300px;
+  margin-bottom: 20px;
+  width: 380px; /*  the width as needed */
 }
-  

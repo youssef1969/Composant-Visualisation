@@ -5,7 +5,7 @@ import './App.css';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const DataChart = ({ data, tValues, label }) => {
+const DataChart = ({ data, tValues, label, axisLabel }) => {
   const chartData = {
     labels: tValues,
     datasets: [
@@ -19,7 +19,24 @@ const DataChart = ({ data, tValues, label }) => {
     ],
   };
 
-  return <Line data={chartData} />;
+  const options = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: axisLabel,
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: label,
+        },
+      },
+    },
+  };
+
+  return <Line data={chartData} options={options} />;
 };
 
 export default DataChart;
