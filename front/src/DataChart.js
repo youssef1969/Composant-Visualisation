@@ -26,18 +26,20 @@ const DataChart = ({ data, tValues, label, axisLabel }) => {
     responsive: true,
     plugins: {
       zoom: {
-        pan: {
-          enabled: true,
-          mode: 'xy',
-        },
         zoom: {
           wheel: {
             enabled: true,
           },
-          pinch: {
-            enabled: true,
-          },
           mode: 'xy',
+          speed: 0.1,
+          onZoomComplete: ({ chart }) => {
+            chart.update('none');
+          },
+        },
+        pan: {
+          enabled: true,
+          mode: 'xy',
+          speed: 20,
         },
       },
       title: {
@@ -61,16 +63,12 @@ const DataChart = ({ data, tValues, label, axisLabel }) => {
     },
   };
 
-  const handleResetZoom = () => {
-    if (chartRef.current) {
-      chartRef.current.resetZoom();
-    }
-  };
-
   return (
-    <div>
+    <div className="chart-container">
       <Line ref={chartRef} data={chartData} options={options} />
-      <button onClick={handleResetZoom}>Réinitialiser zoom</button>
+      <div className="zoom-buttons">
+        <button onClick={() => chartRef.current.resetZoom()} className="zoom-button">--</button>
+      </div>
     </div>
   );
 };
